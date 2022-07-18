@@ -43,13 +43,13 @@ public class DataLoader implements CommandLineRunner {
 
        // statusRepository.save(new Status(null, "Shoshilinch"));
 
-        List<Answer> answers = new ArrayList<>(Arrays.asList(
-                new Answer(null, "Bajarildi"),
-                new Answer(null, "Bizni qo'limizdan kelmaydi"),
-                new Answer(null, "Bajarib bo'lmaydi")
-        ));
-
-        answerRepository.saveAll(answers);
+//        List<Answer> answers = new ArrayList<>(Arrays.asList(
+//                new Answer(null, "Bajarildi"),
+//                new Answer(null, "Bizni qo'limizdan kelmaydi"),
+//                new Answer(null, "Bajarib bo'lmaydi")
+//        ));
+//
+//        answerRepository.saveAll(answers);
 
     }
 }
