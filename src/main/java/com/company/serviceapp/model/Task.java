@@ -4,23 +4,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.PackagePrivate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity(name = "users")
+@Entity(name = "tasks")
 @PackagePrivate
 public class Task {
 
     @Id
-    @GeneratedValue
+    @Type(type = "org.hibernate.type.PostgresUUIDType")
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     UUID id;
 
     String title;
@@ -28,16 +30,20 @@ public class Task {
     String body;
 
     @ManyToOne
-    User user;
-
-    @ManyToOne
-    Answer answer;
+    Department department;
 
     @ManyToOne
     Status status;
 
+    @OrderBy
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
     Timestamp start_time;
 
     Timestamp end_time;
 
+    Boolean is_finished;
+
+    @ManyToOne
+    Answer answer;
 }
