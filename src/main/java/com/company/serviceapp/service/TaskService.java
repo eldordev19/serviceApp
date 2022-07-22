@@ -11,8 +11,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -83,6 +86,69 @@ public class TaskService {
         UUID departmentId = user.getDepartment().getId();
 
         return taskRepository.findByDepartmentIdFinishedTasks(departmentId);
+    }
+
+    public List<Task> getAllMonthlyTasks(Integer month) {
+        List<Task> tasks = new ArrayList<>();
+
+        return tasks;
+    }
+
+    public List<Task> getDailyTasks() {
+        LocalDate localDate = LocalDate.from(LocalDateTime.now());
+
+        return taskRepository.getAllDailyTasks(localDate);
+    }
+
+    public List<Task> getLastTask(int day) {
+
+        LocalDate localDate = LocalDate.from(LocalDateTime.now());
+
+        return taskRepository.getLastTasks(Date.valueOf(localDate.minusDays(day)));
+    }
+
+    public List<Task> getDailyFinishedTasks() {
+
+        LocalDate localDate = LocalDate.from(LocalDateTime.now());
+
+        return taskRepository.getDailyFinishedTasks(localDate);
+
+    }
+
+    public List<Task> getDailyUnFinishedTasks() {
+
+        LocalDate localDate = LocalDate.from(LocalDateTime.now());
+
+        return taskRepository.getDailyUnFinishedTasks(localDate);
+    }
+
+    public List<Task> getDailyCannotFinishTasks() {
+
+        LocalDate localDate = LocalDate.from(LocalDateTime.now());
+
+        return taskRepository.getDailyCannotFinishTasks(localDate);
+    }
+
+    public List<Task> getDailyFinishedTasks(int day) {
+
+        LocalDate localDate = LocalDate.from(LocalDateTime.now());
+
+        return taskRepository.getDailyFinishedTasks(localDate.minusDays(day));
+
+    }
+
+    public List<Task> getDailyUnFinishedTasks(int day) {
+
+        LocalDate localDate = LocalDate.from(LocalDateTime.now());
+
+        return taskRepository.getDailyUnFinishedTasks(localDate.minusDays(day));
+    }
+
+    public List<Task> getDailyCannotFinishTasks(int day) {
+
+        LocalDate localDate = LocalDate.from(LocalDateTime.now());
+
+        return taskRepository.getDailyCannotFinishTasks(localDate.minusDays(day));
     }
 }
 
