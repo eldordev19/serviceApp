@@ -2,7 +2,9 @@ package com.company.serviceapp.controller;
 
 import com.company.serviceapp.dto.AnswerDto;
 import com.company.serviceapp.dto.TaskDto;
+import com.company.serviceapp.model.Status;
 import com.company.serviceapp.model.Task;
+import com.company.serviceapp.repository.StatusRepository;
 import com.company.serviceapp.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.ClientInfoStatus;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +26,24 @@ public class TaskController {
     @Autowired
     TaskService taskService;
 
-    @GetMapping("/home")
+    @Autowired
+    StatusRepository statusRepository;
+
+    @GetMapping("/")
     public String homePage(Model model) {
 
+        first(model);
+
+        List<Status> statusList = statusRepository.findAll();
+
+        model.addAttribute("status1", statusList.get(0).getName());
+        model.addAttribute("status2", statusList.get(1).getName());
+
+
+        return "index";
+    }
+
+    private void first(Model model) {
         List<Task> dailyTasks = taskService.getDailyTasks();
 
         List<Task> finishedDailyTasks = taskService.getDailyFinishedTasks();
@@ -36,8 +54,16 @@ public class TaskController {
 
         if (dailyTasks.size() == 0) {
             model.addAttribute("countAllTasks", 1);
+            model.addAttribute("finishedPercent", 0);
+            model.addAttribute("unFinishedPercent", 0);
+            model.addAttribute("cannotFinishPercent", 0);
         } else {
+            double i = (finishedDailyTasks.size() / dailyTasks.size()) * 100;
             model.addAttribute("countAllTasks", dailyTasks.size());
+            model.addAttribute("finishedPercent", i);
+            double x = unFinishedDailyTasks.size()/dailyTasks.size() * 100;
+            model.addAttribute("unFinishedPercent", x);
+            model.addAttribute("cannotFinishPercent", (cannotFinishTasks.size()/dailyTasks.size() * 100));
         }
 
         model.addAttribute("dailyTasks", dailyTasks);
@@ -45,10 +71,10 @@ public class TaskController {
         model.addAttribute("countUnFinishedTasks", unFinishedDailyTasks.size());
         model.addAttribute("countCannotFinishTasks", cannotFinishTasks.size());
 
-        return "index";
+        model.addAttribute("day", LocalDate.now());
     }
 
-    @GetMapping
+    @GetMapping("/home")
     public String getIndex(Model model) {
         return "index";
     }
@@ -99,14 +125,14 @@ public class TaskController {
         List<Task> cannotFinishTasks = taskService.getDailyCannotFinishTasks(day);
 
         if (tasks.size() == 0) {
-            redirectAttrs.addFlashAttribute("finished", 0);
-            redirectAttrs.addFlashAttribute("unFinished", 0);
-            redirectAttrs.addFlashAttribute("cannotFinish", 0);
+            redirectAttrs.addFlashAttribute("finishedPercent", 0);
+            redirectAttrs.addFlashAttribute("unFinishedPercent", 0);
+            redirectAttrs.addFlashAttribute("cannotFinishPercent", 0);
             redirectAttrs.addFlashAttribute("countAllTasks", 1);
         } else {
-            redirectAttrs.addFlashAttribute("finished", finishedDailyTasks.size()/tasks.size());
-            redirectAttrs.addFlashAttribute("unFinished", unFinishedDailyTasks.size()/tasks.size());
-            redirectAttrs.addFlashAttribute("cannotFinish", cannotFinishTasks.size()/tasks.size());
+            redirectAttrs.addFlashAttribute("finishedPercent", (finishedDailyTasks.size()/tasks.size()) * 100);
+            redirectAttrs.addFlashAttribute("unFinishedPercent", (unFinishedDailyTasks.size()/tasks.size()) * 100);
+            redirectAttrs.addFlashAttribute("cannotFinishPercent", (cannotFinishTasks.size()/tasks.size() * 100));
             redirectAttrs.addFlashAttribute("countAllTasks", tasks.size());
         }
 
@@ -116,6 +142,8 @@ public class TaskController {
         redirectAttrs.addFlashAttribute("countUnFinishedTasks", unFinishedDailyTasks.size());
         redirectAttrs.addFlashAttribute("countCannotFinishTasks", cannotFinishTasks.size());
 
-        return "redirect:/";
+            redirectAttrs.addFlashAttribute("day", LocalDate.now().minusDays(day));
+
+        return "redirect:/home";
     }
 }

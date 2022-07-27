@@ -385,51 +385,17 @@
                                     <h3>Tasklar soni - [[${countAllTasks}]]</h3>
                                 </div>
                                 <div class="mt-2">
-                                    <div class="d-flex justify-content-between">
-                                        <h4>Bajarilgan topshiriqlar([[${countFinishedTasks}]])</h4>
-                                        <h4>[[${finished}]]%</h4>
-                                    </div>
-                                    <div class="progress progress-md  mt-2">
-                                        <div class="progress-bar bg-secondary" role="progressbar"
-                                             th:style="'width:' + ( ${countFinishedTasks} == 0  ? '0' :  (${countFinishedTasks * 1.0} / ${countAllTasks}) * 100.0) + '%;'"
-                                             aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"
-                                        th:att></div>
-                                    </div>
-                                </div>
-                                <div class="mt-4">
-                                    <div class="d-flex justify-content-between">
-                                        <h4>Bajarilmagan([[${countUnFinishedTasks}]])</h4>
-                                        <h4>[[${unFinished}]]%</h4>
-                                    </div>
-                                    <div class="progress progress-md  mt-2">
-                                        <div class="progress-bar bg-success" role="progressbar"
-                                             th:style="'width:' + ( ${countUnFinishedTasks} == 0  ? '0' :  (${countUnFinishedTasks * 1.0} / ${countAllTasks}) * 100.0) + '%;'"
-                                             aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="mt-4 mb-5">
-                                    <div class="d-flex justify-content-between">
-                                        <h4>Bajarishni iloji yo'q([[${countCannotFinishTasks}]])</h4>
-                                        <h4>[[${cannotFinish}]]%</h4>
-                                    </div>
-                                    <div class="progress progress-md mt-2">
-                                        <div class="progress-bar bg-warning" role="progressbar"
-                                             th:style="'width:' + ( ${countCannotFinishTasks} == 0  ? '0' :  (${countCannotFinishTasks * 1.0} / ${countAllTasks}) * 100.0) + '%;'"
-                                             aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <canvas id="salesTopChart"></canvas>
-                                <div class="col-sm-6">
                                     <div class="d-flex align-items-center justify-content-md-end">
                                         <div class="mb-3 mb-xl-0 pr-1">
                                             <div class="dropdown">
                                                 <button class="btn bg-white btn-sm dropdown-toggle btn-icon-text border mr-2"
                                                         type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true"
                                                         aria-expanded="false">
-                                                    <i class="typcn typcn-calendar-outline mr-2"></i>Today
+                                                    <i class="typcn typcn-calendar-outline mr-2"></i>[[${day}]]
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3"
                                                      data-x-placement="top-start">
+                                                    <a class="dropdown-item" th:href="@{/home}">Today</a>
                                                     <a class="dropdown-item" th:href="@{/last/1}">Last 1 day</a>
                                                     <a class="dropdown-item" th:href="@{/last/2}">Last 2 days</a>
                                                     <a class="dropdown-item" th:href="@{/last/3}">Last 3 days</a>
@@ -438,67 +404,89 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                                <div class="mt-2">
+                                    <div class="d-flex justify-content-between">
+                                        <h4>Bajarilgan topshiriqlar([[${countFinishedTasks}]])</h4>
+                                        <h4 th:text="( ${countFinishedTasks} == 0  ? '0' :  (${countFinishedTasks * 1.0} / ${countAllTasks} * 100.0)) + '%;'"></h4>
+                                    </div>
+                                    <div class="progress progress-md  mt-2">
+                                        <div class="progress-bar bg-secondary" role="progressbar"
+                                             th:style="'width:' + ( ${countFinishedTasks} == 0  ? '0' :  (${countFinishedTasks * 1.0} / ${countAllTasks} * 100.0)) + '%;'"
+                                             aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"
+                                        th:att></div>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <div class="d-flex justify-content-between">
+                                        <h4>Bajarilmagan([[${countUnFinishedTasks}]])</h4>
+                                        <h4 th:text="( ${countUnFinishedTasks} == 0  ? '0' :  (${countUnFinishedTasks * 1.0 * 100.0} / ${countAllTasks})) + '%;'"></h4>
+                                    </div>
+                                    <div class="progress progress-md  mt-2">
+                                        <div class="progress-bar bg-success" role="progressbar"
+                                             th:style="'width:' + ( ${countUnFinishedTasks} == 0  ? '0' :  (${countUnFinishedTasks * 1.0 * 100.0} / ${countAllTasks})) + '%;'"
+                                             aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 mb-5">
+                                    <div class="d-flex justify-content-between">
+                                        <h4>Bajarishni iloji yo'q([[${countCannotFinishTasks}]])</h4>
+                                        <h4 th:text="( ${countCannotFinishTasks} == 0  ? '0' :  (${countCannotFinishTasks * 1.0} / ${countAllTasks} * 100.0)) + '%;'"></h4>
+                                    </div>
+                                    <div class="progress progress-md mt-2">
+                                        <div class="progress-bar bg-warning" role="progressbar"
+                                             th:style="'width:' + ( ${countCannotFinishTasks} == 0  ? '0' :  (${countCannotFinishTasks * 1.0} / ${countAllTasks} * 100.0)) + '%;'"
+                                             aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <canvas id="salesTopChart"></canvas>
 
-                    </div>
-                    <div class="col-xl-3 d-flex grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex flex-wrap justify-content-between">
-                                    <h4 class="card-title mb-3">Buyurtmalar status bo'yicha</h4>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="d-flex justify-content-between mb-md-5 mt-3">
-                                                    <div class="small">Critical</div>
-                                                    <div class="text-danger small">Error</div>
-                                                    <div class="text-warning small">Warning</div>
-                                                </div>
-                                                <canvas id="eventChart"></canvas>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4 d-flex grid-margin stretch-card">
+                    <div class="col-xl-7 d-flex grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-wrap justify-content-between">
-                                    <h4 class="card-title mb-3">Device stats</h4>
+                                    <h4 class="card-title mb-3">Project status</h4>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="d-flex justify-content-between mb-4">
-                                                    <div>Uptime</div>
-                                                    <div class="text-muted">195 Days, 8 hours</div>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+<!--                                        <tr th:each="employee : ${employees}" th:style="${employeeStat.odd}? 'font-weight: bold;'" th:alt-title="${employeeStat.even}? 'even' : 'odd'">-->
+<!--                                            <td th:text="${employee.firstName}"></td>-->
+<!--                                            <td th:text="${employee.lastName}"></td>-->
+<!--                                            <td th:text="${employee.email}"></td>-->
+<!--                                        </tr>-->
+                                        <tr th:each="employee : ${dailyTasks}">
+                                            <td>
+                                                <div class="d-flex">
+                                                    <img class="img-sm rounded-circle mb-md-0 mr-2"
+                                                         src="images/faces/face30.png" alt="profile image">
+                                                    <div>
+                                                        <div> Company</div>
+                                                        <div class="font-weight-bold mt-1">volkswagen</div>
+                                                    </div>
                                                 </div>
-                                                <div class="d-flex justify-content-between mb-4">
-                                                    <div>First Seen</div>
-                                                    <div class="text-muted">23 Sep 2019, 2.04PM</div>
-                                                </div>
-                                                <div class="d-flex justify-content-between mb-4">
-                                                    <div>Collected time</div>
-                                                    <div class="text-muted">23 Sep 2019, 2.04PM</div>
-                                                </div>
-                                                <div class="d-flex justify-content-between mb-4">
-                                                    <div>Memory space</div>
-                                                    <div class="text-muted">168.3GB</div>
-                                                </div>
-                                                <div class="progress progress-md mt-4">
-                                                    <div class="progress-bar bg-success" role="progressbar"
-                                                         style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                         aria-valuemax="100"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                            </td>
+                                            <td>
+                                                Budget
+                                                <div class="font-weight-bold  mt-1">$2322</div>
+                                            </td>
+                                            <td>
+                                                Status
+                                                <div class="font-weight-bold text-success  mt-1">88%</div>
+                                            </td>
+                                            <td>
+                                                Deadline
+                                                <div class="font-weight-bold  mt-1">07 Nov 2019</div>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-secondary">edit actions
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -560,161 +548,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6 d-flex grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex flex-wrap justify-content-between">
-                                    <h4 class="card-title mb-3">Project status</h4>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex">
-                                                    <img class="img-sm rounded-circle mb-md-0 mr-2"
-                                                         src="images/faces/face30.png" alt="profile image">
-                                                    <div>
-                                                        <div> Company</div>
-                                                        <div class="font-weight-bold mt-1">volkswagen</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                Budget
-                                                <div class="font-weight-bold  mt-1">$2322</div>
-                                            </td>
-                                            <td>
-                                                Status
-                                                <div class="font-weight-bold text-success  mt-1">88%</div>
-                                            </td>
-                                            <td>
-                                                Deadline
-                                                <div class="font-weight-bold  mt-1">07 Nov 2019</div>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-sm btn-secondary">edit actions
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex">
-                                                    <img class="img-sm rounded-circle mb-md-0 mr-2"
-                                                         src="images/faces/face31.png" alt="profile image">
-                                                    <div>
-                                                        <div> Company</div>
-                                                        <div class="font-weight-bold  mt-1">Land Rover</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                Budget
-                                                <div class="font-weight-bold  mt-1">$12022</div>
-                                            </td>
-                                            <td>
-                                                Status
-                                                <div class="font-weight-bold text-success  mt-1">70%</div>
-                                            </td>
-                                            <td>
-                                                Deadline
-                                                <div class="font-weight-bold  mt-1">08 Nov 2019</div>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-sm btn-secondary">edit actions
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex">
-                                                    <img class="img-sm rounded-circle mb-md-0 mr-2"
-                                                         src="images/faces/face32.png" alt="profile image">
-                                                    <div>
-                                                        <div> Company</div>
-                                                        <div class="font-weight-bold  mt-1">Bentley</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                Budget
-                                                <div class="font-weight-bold  mt-1">$8,725</div>
-                                            </td>
-                                            <td>
-                                                Status
-                                                <div class="font-weight-bold text-success  mt-1">87%</div>
-                                            </td>
-                                            <td>
-                                                Deadline
-                                                <div class="font-weight-bold  mt-1">11 Jun 2019</div>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-sm btn-secondary">edit actions
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex">
-                                                    <img class="img-sm rounded-circle mb-md-0 mr-2"
-                                                         src="images/faces/face33.png" alt="profile image">
-                                                    <div>
-                                                        <div> Company</div>
-                                                        <div class="font-weight-bold  mt-1">Morgan</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                Budget
-                                                <div class="font-weight-bold  mt-1">$5,220</div>
-                                            </td>
-                                            <td>
-                                                Status
-                                                <div class="font-weight-bold text-success  mt-1">65%</div>
-                                            </td>
-                                            <td>
-                                                Deadline
-                                                <div class="font-weight-bold  mt-1">26 Oct 2019</div>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-sm btn-secondary">edit actions
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex">
-                                                    <img class="img-sm rounded-circle mb-md-0 mr-2"
-                                                         src="images/faces/face34.png" alt="profile image">
-                                                    <div>
-                                                        <div> Company</div>
-                                                        <div class="font-weight-bold  mt-1">volkswagen</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                Budget
-                                                <div class="font-weight-bold  mt-1">$2322</div>
-                                            </td>
-                                            <td>
-                                                Status
-                                                <div class="font-weight-bold text-success mt-1">88%</div>
-                                            </td>
-                                            <td>
-                                                Deadline
-                                                <div class="font-weight-bold  mt-1">07 Nov 2019</div>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-sm btn-secondary">edit actions
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-xl-6 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
@@ -760,3 +593,66 @@
 <!-- End custom js for this page-->
 </body>
 </html>
+
+
+
+<!--<div class="col-xl-3 d-flex grid-margin stretch-card">-->
+<!--    <div class="card">-->
+<!--        <div class="card-body">-->
+<!--            <div class="d-flex flex-wrap justify-content-between">-->
+<!--                <h4 class="card-title mb-3">Buyurtmalar status bo'yicha</h4>-->
+<!--            </div>-->
+<!--            <div class="row">-->
+<!--                <div class="col-12">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+<!--                            <div class="d-flex justify-content-between mb-md-5 mt-2">-->
+<!--                                <div class="text-danger">[[${status1}]]</div>-->
+<!--                                <div class="text-warning">[[${status2}]]</div>-->
+<!--                            </div>-->
+<!--                            <canvas id="eventChart"></canvas>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="col-xl-4 d-flex grid-margin stretch-card">-->
+<!--    <div class="card">-->
+<!--        <div class="card-body">-->
+<!--            <div class="d-flex flex-wrap justify-content-between">-->
+<!--                <h4 class="card-title mb-3">Device stats</h4>-->
+<!--            </div>-->
+<!--            <div class="row">-->
+<!--                <div class="col-12">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+<!--                            <div class="d-flex justify-content-between mb-4">-->
+<!--                                <div>Uptime</div>-->
+<!--                                <div class="text-muted">195 Days, 8 hours</div>-->
+<!--                            </div>-->
+<!--                            <div class="d-flex justify-content-between mb-4">-->
+<!--                                <div>First Seen</div>-->
+<!--                                <div class="text-muted">23 Sep 2019, 2.04PM</div>-->
+<!--                            </div>-->
+<!--                            <div class="d-flex justify-content-between mb-4">-->
+<!--                                <div>Collected time</div>-->
+<!--                                <div class="text-muted">23 Sep 2019, 2.04PM</div>-->
+<!--                            </div>-->
+<!--                            <div class="d-flex justify-content-between mb-4">-->
+<!--                                <div>Memory space</div>-->
+<!--                                <div class="text-muted">168.3GB</div>-->
+<!--                            </div>-->
+<!--                            <div class="progress progress-md mt-4">-->
+<!--                                <div class="progress-bar bg-success" role="progressbar"-->
+<!--                                     style="width: 50%" aria-valuenow="50" aria-valuemin="0"-->
+<!--                                     aria-valuemax="100"></div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->

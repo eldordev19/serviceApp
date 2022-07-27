@@ -62,7 +62,7 @@ public class TaskService {
 
         task.setAnswer(answer);
 
-        task.setEnd_time(Timestamp.valueOf(LocalDateTime.now()));
+        task.setEnd_time(LocalDateTime.now());
 
         task.setIs_finished(true);
 
@@ -95,6 +95,7 @@ public class TaskService {
     }
 
     public List<Task> getDailyTasks() {
+
         LocalDate localDate = LocalDate.from(LocalDateTime.now());
 
         return taskRepository.getAllDailyTasks(localDate);

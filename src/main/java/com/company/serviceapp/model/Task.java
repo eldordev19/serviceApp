@@ -10,6 +10,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -36,11 +39,14 @@ public class Task {
     Status status;
 
     @OrderBy
-    @CreationTimestamp
     @Column(nullable = false, updatable = false)
-    Timestamp start_time;
+    LocalTime start_time;
 
-    Timestamp end_time;
+    @OrderBy
+    @Column(nullable = false, updatable = false)
+    LocalDate date;
+
+    LocalDateTime end_time;
 
     Boolean is_finished;
 
