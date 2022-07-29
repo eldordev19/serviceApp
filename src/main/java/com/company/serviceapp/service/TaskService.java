@@ -48,7 +48,7 @@ public class TaskService {
         Status status = statusRepository.findById(UUID.fromString(taskDto.getStatus())).get();
 
         task.setTitle(taskDto.getTitle());
-        task.setBody(taskDto.getBody());
+        task.setDescription(taskDto.getBody());
         task.setStatus(status);
         task.setDepartment(user.getDepartment());
 

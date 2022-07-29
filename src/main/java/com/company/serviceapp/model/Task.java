@@ -30,7 +30,7 @@ public class Task {
 
     String title;
 
-    String body;
+    String description;
 
     @ManyToOne
     Department department;

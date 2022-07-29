@@ -395,7 +395,7 @@
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3"
                                                      data-x-placement="top-start">
-                                                    <a class="dropdown-item" th:href="@{/home}">Today</a>
+                                                    <a class="dropdown-item" th:href="@{/}">Today</a>
                                                     <a class="dropdown-item" th:href="@{/last/1}">Last 1 day</a>
                                                     <a class="dropdown-item" th:href="@{/last/2}">Last 2 days</a>
                                                     <a class="dropdown-item" th:href="@{/last/3}">Last 3 days</a>
@@ -448,16 +448,12 @@
                             <div class="card-body">
                                 <div class="d-flex flex-wrap justify-content-between">
                                     <h4 class="card-title mb-3">Project status</h4>
+                                    <br>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <tbody>
-<!--                                        <tr th:each="employee : ${employees}" th:style="${employeeStat.odd}? 'font-weight: bold;'" th:alt-title="${employeeStat.even}? 'even' : 'odd'">-->
-<!--                                            <td th:text="${employee.firstName}"></td>-->
-<!--                                            <td th:text="${employee.lastName}"></td>-->
-<!--                                            <td th:text="${employee.email}"></td>-->
-<!--                                        </tr>-->
-                                        <tr th:each="employee : ${dailyTasks}">
+                                        <tr th:each="task : ${tasksForShow}">
                                             <td>
                                                 <div class="d-flex">
                                                     <img class="img-sm rounded-circle mb-md-0 mr-2"
@@ -487,6 +483,12 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <br>
+                                        <div class="text-center">
+                                            <form action="/task/workplace" method="get">
+                                                <button style="height:40px;width:200px" type="submit" class="btn btn-light">Hammasini ko'rish</button>
+                                            </form>
+                                        </div>
                                 </div>
                             </div>
                         </div>
@@ -565,7 +567,6 @@
     <!-- main-panel ends -->
 </div>
 <!-- page-body-wrapper ends -->
-</div>
 <!-- container-scroller -->
 <!-- base:js -->
 <script src="vendors/js/vendor.bundle.base.js"></script>
